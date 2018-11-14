@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>HELLO</title>
+</h:head>
+<h:body>
+
+
+	<style type="text/css">
+.ui-datatable .ui-datatable-header {
+	text-align: right !important;
+}
+
+.ui-button-text-only .ui-button-text {
+	padding: 0.3em 0.4em;
+}
+
+.ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-header .ui-chkbox {
+	visibility: hidden;
+}
+
+.ui-filter-column .ui-column-customfilter .custom-filter {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.year-spinner input {
+	width: 100%;
+	box-sizing: border-box;
+}
+</style>
+
+	<h:form>
+
+		<p:dataTable var="car" value="#{dtBasicView.cars}" paginator="true"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15" widgetVar="carsTable"
+			emptyMessage="No cars found with given criteria"
+			filteredValue="#{dtBasicView.cars}">
+
+			<f:facet name="header">
+				<p:outputPanel>
+					<h:outputText value="Search all fields:" />
+					<p:inputText id="globalFilter" onkeyup="PF('carsTable').filter()"
+						style="width:150px" placeholder="Enter keyword" />
+				</p:outputPanel>
+			</f:facet>
+			<p:column filterBy="#{car.type}" headerText="type" footerText="lte"
+				filterMatchMode="lte">
+				<f:facet name="filter">
+					<p:spinner onchange="PF('carsTable').filter()"
+						styleClass="year-spinner custom-filter">
+						<f:converter converterId="javax.faces.Integer" />
+					</p:spinner>
+				</f:facet>
+				<h:outputText value="#{car.type}" />
+			</p:column>
+
+			<p:column filterBy="#{car.marque}" headerText="type" footerText="lte"
+				filterMatchMode="lte">
+				<f:facet name="filter">
+					<p:spinner onchange="PF('carsTable').filter()"
+						styleClass="year-spinner custom-filter">
+						<f:converter converterId="javax.faces.Integer" />
+					</p:spinner>
+					
+				</f:facet>
+				<f:facet name="output"><h:outputText value="#{car.type}" /></f:facet>
+				<f:facet name="input"><p:inputText value="#{car.type}" style="width:100%" label="Year"/></f:facet>
+			</p:column>
+
+
+
+
+
+
+			<f:facet name="paginatorTopLeft">
+				<p:commandButton type="button" icon="pi pi-refresh" />
+			</f:facet>
+
+			<f:facet name="paginatorBottomRight">
+				<p:commandButton type="button" icon="pi pi-cloud-upload" />
+			</f:facet>
+			
+			<p:column style="width:35px">
+            <p:rowEditor />
+        </p:column>
+
+		</p:dataTable>
+
+
+
+	</h:form>
+</h:body>
+</html>
